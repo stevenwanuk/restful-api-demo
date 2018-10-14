@@ -23,6 +23,7 @@ import com.sven.demo.service.UserService;
 import com.sven.demo.utils.Constants;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api
 @RestController
@@ -40,18 +41,21 @@ public class OfferController
 
 	}
 
-	@GetMapping()
+	@ApiOperation("Returns list of all valid offers for giving owner")
+	@GetMapping(produces = "application/json")
 	public List<Offer> findAllByOwnerId(@RequestHeader Long ownerId)
 	{
 		return offerService.findAllValidOfferByOwnerId(ownerId);
 	}
 
+	@ApiOperation("Returns a valid offer for givng offerId and owner")
 	@GetMapping("/{id}")
 	public Offer findByIdAndOwnerId(@PathVariable Long id, @RequestHeader Long ownerId)
 	{
 		return offerService.getValidOfferByIdAndOwnerId(id, ownerId);
 	}
 
+	@ApiOperation("create an new offer")
 	@PostMapping()
 	public ResponseEntity<Offer> create(@RequestParam String name, @RequestParam String detail,
 			@RequestParam @DateTimeFormat(pattern = Constants.DATE_FORMAT_PATTERN) Date expiryDate,
@@ -68,6 +72,7 @@ public class OfferController
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedOffer);
 	}
 
+	@ApiOperation("cancel an existing valid offer")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Offer> cancel(@PathVariable Long id, @RequestHeader Long ownerId)
 	{
