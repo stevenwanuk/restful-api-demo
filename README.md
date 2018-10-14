@@ -18,6 +18,13 @@ You are required to create a simple RESTful software service that will allow a m
 You can ignore authentication and authorization concerns
 
 
+### assumptions
+
+- valid offers are: not expired, not cancelled, 
+- Users are only able to view / cancel / update their valid offers
+- "Cancel" action sets "deleted" flag to "True"
+  
+
 ### initial db data
 
 sql file: /src/main/resources/import.sql
